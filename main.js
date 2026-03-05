@@ -4,27 +4,30 @@ const hours = [
     "18:00", "19:00", "20:00", "21:00", "22:00"
 ];
 
+// 기본 카테고리
+const defaultCategories = ["운동", "마케팅", "관리", "수익", "공부"];
+
 document.addEventListener('DOMContentLoaded', () => {
     const tableBody = document.querySelector("#table tbody");
     const dateInput = document.getElementById("date");
+    const addCategoryBtn = document.getElementById("add-category-btn");
+    const categoryNameInput = document.getElementById("new-category-name");
 
-    // 오늘 날짜 기본 설정
+    // 오늘 날짜 설정
     const today = new Date().toISOString().split('T')[0];
     dateInput.value = today;
+
+    // 카테고리 초기화
+    initCategories();
 
     // 테이블 행 생성
     hours.forEach(hour => {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${hour}</td>
-            <td>
+            <td class="custom-category-cell">
                 <select class="category-select">
-                    <option value="">선택</option>
-                    <option value="wood">운동</option>
-                    <option value="fire">마케팅</option>
-                    <option value="earth">관리</option>
-                    <option value="metal">수익</option>
-                    <option value="water">공부</option>
+                    <!-- Categories will be loaded here -->
                 </select>
             </td>
             <td><input type="text" class="task-input" placeholder="할 일 입력..."></td>
@@ -37,18 +40,90 @@ document.addEventListener('DOMContentLoaded', () => {
                 </select>
             </td>
         `;
-
-        // 카테고리 선택 시 색상 변경
-        row.querySelector(".category-select").addEventListener('change', (e) => {
-            row.cells[1].className = e.target.value;
-        });
-
         tableBody.appendChild(row);
+    });
+
+    // 모든 select 업데이트
+    updateAllCategorySelects();
+
+    // 카테고리 추가 이벤트
+    addCategoryBtn.addEventListener('click', () => {
+        const name = categoryNameInput.value.trim();
+        if (name) {
+            addCategory(name);
+            categoryNameInput.value = "";
+        }
     });
 
     dateInput.addEventListener("change", loadData);
     loadData();
 });
+
+// --- Category Logic ---
+
+function initCategories() {
+    let categories = JSON.parse(localStorage.getItem('user_categories'));
+    if (!categories) {
+        categories = defaultCategories;
+        localStorage.setItem('user_categories', JSON.stringify(categories));
+    }
+    renderCategoryTags();
+}
+
+function addCategory(name) {
+    const categories = JSON.parse(localStorage.getItem('user_categories'));
+    if (!categories.includes(name)) {
+        categories.push(name);
+        localStorage.setItem('user_categories', JSON.stringify(categories));
+        renderCategoryTags();
+        updateAllCategorySelects();
+    }
+}
+
+function removeCategory(name) {
+    let categories = JSON.parse(localStorage.getItem('user_categories'));
+    categories = categories.filter(c => c !== name);
+    localStorage.setItem('user_categories', JSON.stringify(categories));
+    renderCategoryTags();
+    updateAllCategorySelects();
+}
+
+function renderCategoryTags() {
+    const container = document.getElementById('category-tags');
+    const categories = JSON.parse(localStorage.getItem('user_categories'));
+    container.innerHTML = "";
+
+    categories.forEach(name => {
+        const tag = document.createElement('div');
+        tag.className = 'category-tag';
+        tag.innerHTML = `
+            <span>${name}</span>
+            <span class="remove-category" onclick="removeCategory('${name}')">&times;</span>
+        `;
+        container.appendChild(tag);
+    });
+}
+
+function updateAllCategorySelects() {
+    const selects = document.querySelectorAll('.category-select');
+    const categories = JSON.parse(localStorage.getItem('user_categories'));
+
+    selects.forEach(select => {
+        const currentValue = select.value;
+        let options = '<option value="">선택</option>';
+        categories.forEach(name => {
+            options += `<option value="${name}">${name}</option>`;
+        });
+        select.innerHTML = options;
+        
+        // 이전에 선택되어 있던 값이 있으면 유지
+        if (categories.includes(currentValue)) {
+            select.value = currentValue;
+        }
+    });
+}
+
+// --- Data Persistence Logic ---
 
 function saveData() {
     const date = document.getElementById("date").value;
@@ -78,7 +153,7 @@ function saveData() {
     };
 
     localStorage.setItem(`planner_${date}`, JSON.stringify(data));
-    alert("전략적인 하루 계획이 저장되었습니다!");
+    alert("오늘의 계획이 저장되었습니다!");
 }
 
 function loadData() {
@@ -86,14 +161,13 @@ function loadData() {
     const rawData = localStorage.getItem(`planner_${date}`);
     const rows = document.querySelectorAll("#table tbody tr");
 
-    // 초기화
+    // 필드 초기화
     const fields = ['brain-dump', 'q1-tasks', 'q2-tasks', 'q3-tasks', 'q4-tasks', 'big1', 'big2', 'big3'];
     fields.forEach(id => document.getElementById(id).value = "");
     rows.forEach(r => {
         r.querySelector(".category-select").value = "";
         r.querySelector(".task-input").value = "";
         r.querySelector(".status-select").value = "";
-        r.cells[1].className = "";
     });
 
     if (!rawData) return;
@@ -111,10 +185,19 @@ function loadData() {
     rows.forEach((r, i) => {
         if (d.log && d.log[i]) {
             const item = d.log[i];
-            r.querySelector(".category-select").value = item.category;
+            const select = r.querySelector(".category-select");
+            
+            // 저장된 데이터가 현재 카테고리 목록에 없으면 목록에 추가하여 보존
+            if (item.category && !Array.from(select.options).some(opt => opt.value === item.category)) {
+                const opt = document.createElement('option');
+                opt.value = item.category;
+                opt.textContent = item.category;
+                select.appendChild(opt);
+            }
+
+            select.value = item.category;
             r.querySelector(".task-input").value = item.task;
             r.querySelector(".status-select").value = item.status;
-            r.cells[1].className = item.category;
         }
     });
 }
