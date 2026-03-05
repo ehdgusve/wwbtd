@@ -3,8 +3,47 @@ const defaultCategories = ["운동", "마케팅", "관리", "수익", "공부"];
 let brainDumpItems = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    initApp();
+    checkLoginState();
+    
+    // 로그인 폼 이벤트
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            if (username) {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('username', username);
+                checkLoginState();
+            }
+        });
+    }
+
+    // 로그아웃 이벤트
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            location.reload();
+        });
+    }
 });
+
+function checkLoginState() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const landingPage = document.getElementById('landing-page');
+    const appContainer = document.getElementById('app-container');
+
+    if (isLoggedIn) {
+        landingPage.style.display = 'none';
+        appContainer.style.display = 'block';
+        initApp(); // 플래너 초기화
+    } else {
+        landingPage.style.display = 'flex';
+        appContainer.style.display = 'none';
+    }
+}
 
 function initApp() {
     const today = new Date().toISOString().split('T')[0];

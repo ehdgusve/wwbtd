@@ -6,7 +6,140 @@
     --q1: #ff6b6b; --q2: #4dabf7; --q3: #ffd43b; --q4: #adb5bd;
 }
 
-body { font-family: "Pretendard", sans-serif; background-color: var(--bg-color); margin: 0; padding: 20px; }
+/* Landing Page Styling */
+.landing-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+    padding: 20px;
+}
+
+.landing-content {
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+}
+
+.landing-header h1 {
+    font-size: 4rem;
+    letter-spacing: 15px;
+    margin-bottom: 10px;
+}
+
+.landing-header p {
+    color: #666;
+    font-size: 1.2rem;
+    margin-bottom: 50px;
+}
+
+.how-to-use {
+    margin-bottom: 60px;
+}
+
+.how-to-use h2 {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.guide-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+}
+
+.guide-card:hover {
+    transform: translateY(-5px);
+}
+
+.guide-card .icon {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.guide-card h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.guide-card p {
+    font-size: 0.85rem;
+    color: #777;
+    line-height: 1.4;
+}
+
+/* Login Box */
+.login-box {
+    background: white;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.login-box h2 {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-btn {
+    background: #333;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.login-btn:hover {
+    background: #555;
+}
+
+.login-note {
+    font-size: 0.75rem;
+    color: #999;
+    margin-top: 15px;
+}
+
+/* Header Top with Logout */
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logout-btn {
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #f5f5f5;
+}
 
 .notebook {
     max-width: 900px; margin: 0 auto; background: white; padding: 40px;
