@@ -6,60 +6,75 @@
     <title>WWBTD - Strategic Life Planner</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <!-- 1. 랜딩 페이지 및 로그인 화면 -->
+<body class="theme-classic">
+    <!-- 설정 바 (언어/테마) -->
+    <div class="settings-bar">
+        <select id="lang-select">
+            <option value="ko">한국어</option>
+            <option value="en">English</option>
+            <option value="ja">日本語</option>
+            <option value="zh">简体中文</option>
+            <option value="vi">Tiếng Việt</option>
+        </select>
+        <select id="theme-select">
+            <option value="theme-classic">Classic</option>
+            <option value="theme-sunset">Sunset</option>
+            <option value="theme-forest">Forest</option>
+        </select>
+    </div>
+
+    <!-- 1. 랜딩 페이지 -->
     <div id="landing-page" class="landing-page">
         <div class="landing-content">
             <header class="landing-header">
-                <h1>WWBTD</h1>
-                <p>성취를 위한 전략적 시간 관리의 시작</p>
+                <h1 data-i18n="app_name">WWBTD</h1>
+                <p data-i18n="landing_subtitle">성취를 위한 전략적 시간 관리의 시작</p>
             </header>
 
             <section class="how-to-use">
-                <h2>How to Use WWBTD</h2>
+                <h2 data-i18n="how_to_use">How to Use WWBTD</h2>
                 <div class="guide-grid">
                     <div class="guide-card">
                         <div class="icon">🧠</div>
-                        <h3>Step 1: Brain Dump</h3>
-                        <p>머릿속의 모든 잡념과 할 일을 쏟아내세요.</p>
+                        <h3 data-i18n="step1_title">Step 1: Brain Dump</h3>
+                        <p data-i18n="step1_desc">머릿속의 모든 잡념과 할 일을 쏟아내세요.</p>
                     </div>
                     <div class="guide-card">
                         <div class="icon">⚖️</div>
-                        <h3>Step 2: Eisenhower</h3>
-                        <p>중요도와 긴급도에 따라 일을 분류하세요.</p>
+                        <h3 data-i18n="step2_title">Step 2: Eisenhower</h3>
+                        <p data-i18n="step2_desc">중요도와 긴급도에 따라 일을 분류하세요.</p>
                     </div>
                     <div class="guide-card">
                         <div class="icon">🎯</div>
-                        <h3>Step 3: BIG 3</h3>
-                        <p>오늘 가장 핵심적인 목표 3가지를 정하세요.</p>
+                        <h3 data-i18n="step3_title">Step 3: BIG 3</h3>
+                        <p data-i18n="step3_desc">오늘 가장 핵심적인 목표 3가지를 정하세요.</p>
                     </div>
                     <div class="guide-card">
                         <div class="icon">📅</div>
-                        <h3>Step 4: Daily Log</h3>
-                        <p>시간표에 맞춰 실행하고 기록하세요.</p>
+                        <h3 data-i18n="step4_title">Step 4: Daily Log</h3>
+                        <p data-i18n="step4_desc">시간표에 맞춰 실행하고 기록하세요.</p>
                     </div>
                 </div>
             </section>
 
             <section class="login-box">
-                <h2>로그인하여 시작하기</h2>
+                <h2 data-i18n="login_start">로그인하여 시작하기</h2>
                 <form id="login-form">
-                    <input type="text" id="username" placeholder="아이디 (아무거나 입력 가능)" required>
-                    <input type="password" id="password" placeholder="비밀번호" required>
-                    <button type="submit" class="login-btn">플래너 입장하기</button>
+                    <input type="text" id="username" data-i18n-placeholder="id_placeholder" placeholder="아이디" required>
+                    <input type="password" id="password" data-i18n-placeholder="pw_placeholder" placeholder="비밀번호" required>
+                    <button type="submit" class="login-btn" data-i18n="enter_btn">플래너 입장하기</button>
                 </form>
-                <p class="login-note">* 현재는 데모 버전으로 아이디만 입력하면 즉시 입장이 가능합니다.</p>
             </section>
         </div>
     </div>
 
-    <!-- 2. 실제 플래너 앱 컨테이너 (로그인 전 숨김) -->
+    <!-- 2. 플래너 앱 -->
     <div id="app-container" class="app-container" style="display: none;">
         <div class="notebook">
             <header>
                 <div class="header-top">
-                    <h1>PLANNER</h1>
-                    <button id="logout-btn" class="logout-btn">로그아웃</button>
+                    <h1 data-i18n="planner_title">PLANNER</h1>
+                    <button id="logout-btn" class="logout-btn" data-i18n="logout_btn">로그아웃</button>
                 </div>
                 <div class="date-row">
                     <input type="date" id="date">
@@ -74,51 +89,48 @@
             </header>
 
             <main class="strategy-area">
-                <!-- STEP 1: Brain Dump -->
                 <div id="step-1" class="step-content active">
-                    <div class="step-tag">STEP 1: BRAIN DUMP</div>
+                    <div class="step-tag" data-i18n="step1_tag">STEP 1: BRAIN DUMP</div>
                     <div class="brain-dump-input">
-                        <input type="text" id="dump-input" placeholder="떠오르는 생각을 입력하세요...">
-                        <button id="add-dump-btn">추가</button>
+                        <input type="text" id="dump-input" data-i18n-placeholder="dump_placeholder" placeholder="생각나는 것을 입력하세요...">
+                        <button id="add-dump-btn" data-i18n="add_btn">추가</button>
                     </div>
                     <div id="dump-list" class="dump-list"></div>
                     <div class="nav-buttons">
-                        <button class="next-btn" onclick="nextStep(2)">매트릭스 분류 &rarr;</button>
+                        <button class="next-btn" onclick="nextStep(2)" data-i18n="next_btn">다음 &rarr;</button>
                     </div>
                 </div>
 
-                <!-- STEP 2: Eisenhower Matrix -->
                 <div id="step-2" class="step-content">
-                    <div class="step-tag">STEP 2: EISENHOWER</div>
+                    <div class="step-tag" data-i18n="step2_tag">STEP 2: EISENHOWER</div>
                     <div class="matrix-container">
                         <div class="unsorted-box">
-                            <h3>Storage</h3>
+                            <h3 data-i18n="storage">Storage</h3>
                             <div id="unsorted-items" class="drop-zone"></div>
                         </div>
                         <div class="matrix-grid">
-                            <div class="matrix-item q1"><h3>Q1: Do</h3><div id="q1-zone" class="drop-zone" data-q="q1"></div></div>
-                            <div class="matrix-item q2"><h3>Q2: Plan</h3><div id="q2-zone" class="drop-zone" data-q="q2"></div></div>
-                            <div class="matrix-item q3"><h3>Q3: Delegate</h3><div id="q3-zone" class="drop-zone" data-q="q3"></div></div>
-                            <div class="matrix-item q4"><h3>Q4: Eliminate</h3><div id="q4-zone" class="drop-zone" data-q="q4"></div></div>
+                            <div class="matrix-item q1"><h3 data-i18n="q1">Q1: Do</h3><div id="q1-zone" class="drop-zone" data-q="q1"></div></div>
+                            <div class="matrix-item q2"><h3 data-i18n="q2">Q2: Plan</h3><div id="q2-zone" class="drop-zone" data-q="q2"></div></div>
+                            <div class="matrix-item q3"><h3 data-i18n="q3">Q3: Delegate</h3><div id="q3-zone" class="drop-zone" data-q="q3"></div></div>
+                            <div class="matrix-item q4"><h3 data-i18n="q4">Q4: Eliminate</h3><div id="q4-zone" class="drop-zone" data-q="q4"></div></div>
                         </div>
                     </div>
                     <div class="nav-buttons">
-                        <button class="prev-btn" onclick="prevStep(1)">&larr; Back</button>
-                        <button class="next-btn" onclick="nextStep(3)">BIG 3 설정 &rarr;</button>
+                        <button class="prev-btn" onclick="prevStep(1)" data-i18n="prev_btn">&larr; 이전</button>
+                        <button class="next-btn" onclick="nextStep(3)" data-i18n="next_btn">다음 &rarr;</button>
                     </div>
                 </div>
 
-                <!-- STEP 3: BIG 3 -->
                 <div id="step-3" class="step-content">
-                    <div class="step-tag">STEP 3: TODAY'S BIG 3</div>
+                    <div class="step-tag" data-i18n="step3_tag">STEP 3: TODAY'S BIG 3</div>
                     <div class="big3-container">
-                        <div class="big3-input-group"><span>1</span><input id="big1" placeholder="첫 번째 핵심 목표"></div>
-                        <div class="big3-input-group"><span>2</span><input id="big2" placeholder="두 번째 핵심 목표"></div>
-                        <div class="big3-input-group"><span>3</span><input id="big3" placeholder="세 번째 핵심 목표"></div>
+                        <div class="big3-input-group"><span>1</span><input id="big1" data-i18n-placeholder="big_placeholder"></div>
+                        <div class="big3-input-group"><span>2</span><input id="big2" data-i18n-placeholder="big_placeholder"></div>
+                        <div class="big3-input-group"><span>3</span><input id="big3" data-i18n-placeholder="big_placeholder"></div>
                     </div>
                     <div class="nav-buttons">
-                        <button class="prev-btn" onclick="prevStep(2)">&larr; Back</button>
-                        <button class="next-btn" onclick="updateSummary()">Review Report &darr;</button>
+                        <button class="prev-btn" onclick="prevStep(2)" data-i18n="prev_btn">&larr; 이전</button>
+                        <button class="next-btn" onclick="updateSummary()" data-i18n="review_btn">결과 확인 &darr;</button>
                     </div>
                 </div>
             </main>
@@ -126,16 +138,21 @@
             <hr class="section-divider">
 
             <section class="execution-area">
-                <div class="step-tag">DAILY LOG (ALWAYS ON)</div>
+                <div class="step-tag" data-i18n="execution_tag">DAILY LOG</div>
                 <div class="category-manager-mini">
-                    <input type="text" id="new-category-name" placeholder="카테고리 추가">
+                    <input type="text" id="new-category-name" data-i18n-placeholder="category_placeholder">
                     <button id="add-category-btn">+</button>
                     <div id="category-tags" class="category-tags-mini"></div>
                 </div>
                 <div class="table-wrapper">
                     <table id="table">
                         <thead>
-                            <tr><th>Time</th><th>Category</th><th>Task / Schedule</th><th>Status</th></tr>
+                            <tr>
+                                <th data-i18n="th_time">Time</th>
+                                <th data-i18n="th_cat">Category</th>
+                                <th data-i18n="th_task">Task</th>
+                                <th data-i18n="th_status">Status</th>
+                            </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
@@ -148,32 +165,8 @@
                     </div>
                 </div>
 
-                <button id="save-btn" onclick="saveData()">오늘의 모든 기록 최종 저장</button>
+                <button id="save-btn" onclick="saveData()" data-i18n="save_btn">최종 저장</button>
             </section>
-
-            <article class="info-article">
-                <header class="info-header">
-                    <h2>전략적 시간 관리를 위한 가이드: 성과를 만드는 플래너 활용법</h2>
-                </header>
-                <section class="info-section">
-                    <h3>1. 브레인 덤프(Brain Dump)</h3>
-                    <p>인지적 과부하를 줄이고 집중력을 확보하는 단계입니다.</p>
-                </section>
-                <section class="info-section">
-                    <h3>2. 아이젠하워 매트릭스(Eisenhower Matrix)</h3>
-                    <p>긴급성과 중요도를 기준으로 우선순위를 과학적으로 분류합니다.</p>
-                </section>
-            </article>
-
-            <footer class="slim-footer">
-                <form action="https://formspree.io/f/meerjjdy" method="POST" class="slim-form">
-                    <span>제휴 문의:</span>
-                    <input type="text" name="name" required placeholder="업체명">
-                    <input type="email" name="_replyto" required placeholder="이메일">
-                    <input type="text" name="message" required placeholder="문의내용">
-                    <button type="submit">전송</button>
-                </form>
-            </footer>
         </div>
     </div>
     <script src="main.js"></script>
