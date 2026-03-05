@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="theme-classic">
-    <!-- 설정 바 (언어/테마) -->
+    <!-- 상단 중앙 홈 버튼 -->
+    <div class="home-logo" onclick="goHome()">WWBTD</div>
+
+    <!-- 설정 바 (언어/색상) -->
     <div class="settings-bar">
         <select id="lang-select">
             <option value="ko">한국어</option>
@@ -16,11 +19,10 @@
             <option value="zh">简体中文</option>
             <option value="vi">Tiếng Việt</option>
         </select>
-        <select id="theme-select">
-            <option value="theme-classic">Classic</option>
-            <option value="theme-sunset">Sunset</option>
-            <option value="theme-forest">Forest</option>
-        </select>
+        <div class="color-picker-wrapper">
+            <label for="base-color" data-i18n="theme_color">테마 색상:</label>
+            <input type="color" id="base-color" value="#333333">
+        </div>
     </div>
 
     <!-- 1. 랜딩 페이지 -->
@@ -148,16 +150,18 @@
                     <table id="table">
                         <thead>
                             <tr>
-                                <th data-i18n="th_time">Time</th>
-                                <th data-i18n="th_cat">Category</th>
-                                <th data-i18n="th_task">Task</th>
-                                <th data-i18n="th_status">Status</th>
+                                <th data-i18n="th_start">시작</th>
+                                <th data-i18n="th_end">종료</th>
+                                <th data-i18n="th_cat">분류</th>
+                                <th data-i18n="th_task">할 일</th>
+                                <th data-i18n="th_status">상태</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody id="table-body"></tbody>
                     </table>
                 </div>
-                
+                <button id="add-row-btn" class="add-row-btn" onclick="addTimeBlock()">+ 타임블록 추가</button>                
                 <div id="review-section" class="review-section-mini">
                     <div class="review-grid-mini">
                         <div id="summary-big3" class="summary-box"></div>
