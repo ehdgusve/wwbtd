@@ -3,177 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WWBTD Flow Planner</title>
+    <title>WWBTD Strategic Flow</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="notebook">
+        <!-- 상단: 전략 영역 (Step 1 ~ 3) -->
         <header>
             <h1>PLANNER</h1>
             <div class="date-row">
                 <input type="date" id="date">
             </div>
-            <!-- 단계 표시 바 -->
             <div class="step-indicator">
                 <div class="step-dot active" data-step="1">1</div>
                 <div class="step-line"></div>
                 <div class="step-dot" data-step="2">2</div>
                 <div class="step-line"></div>
                 <div class="step-dot" data-step="3">3</div>
-                <div class="step-line"></div>
-                <div class="step-dot" data-step="4">4</div>
             </div>
         </header>
 
-        <!-- STEP 1: Brain Dump -->
-        <div id="step-1" class="step-content active">
-            <div class="step-tag">STEP 1</div>
-            <h2>Brain Dump</h2>
-            <p class="step-desc">머릿속에 떠오르는 모든 할 일과 생각을 하나씩 입력하고 추가하세요.</p>
-            <div class="brain-dump-input">
-                <input type="text" id="dump-input" placeholder="생각나는 것을 입력하고 Enter...">
-                <button id="add-dump-btn">추가</button>
-            </div>
-            <div id="dump-list" class="dump-list">
-                <!-- 추가된 생각들이 태그 형태로 표시됨 -->
-            </div>
-            <div class="nav-buttons">
-                <button class="next-btn" onclick="nextStep(2)">다음으로 (매트릭스 분류) &rarr;</button>
-            </div>
-        </div>
-
-        <!-- STEP 2: Eisenhower Matrix (Drag & Drop) -->
-        <div id="step-2" class="step-content">
-            <div class="step-tag">STEP 2</div>
-            <h2>Eisenhower Matrix</h2>
-            <p class="step-desc">왼쪽의 생각들을 드래그해서 오른쪽 매트릭스 적절한 칸에 놓으세요.</p>
-            
-            <div class="matrix-container">
-                <!-- 드래그할 아이템들이 모이는 곳 -->
-                <div class="unsorted-box">
-                    <h3>생각 저장소</h3>
-                    <div id="unsorted-items" class="drop-zone"></div>
+        <main class="strategy-area">
+            <!-- STEP 1: Brain Dump -->
+            <div id="step-1" class="step-content active">
+                <div class="step-tag">STEP 1: BRAIN DUMP</div>
+                <div class="brain-dump-input">
+                    <input type="text" id="dump-input" placeholder="떠오르는 생각을 입력하세요...">
+                    <button id="add-dump-btn">추가</button>
                 </div>
+                <div id="dump-list" class="dump-list"></div>
+                <div class="nav-buttons">
+                    <button class="next-btn" onclick="nextStep(2)">매트릭스 분류 &rarr;</button>
+                </div>
+            </div>
 
-                <!-- 2x2 매트릭스 -->
-                <div class="matrix-grid">
-                    <div class="matrix-item q1">
-                        <h3>Q1: Urgent & Important</h3>
-                        <div id="q1-zone" class="drop-zone" data-q="q1"></div>
+            <!-- STEP 2: Eisenhower Matrix -->
+            <div id="step-2" class="step-content">
+                <div class="step-tag">STEP 2: EISENHOWER</div>
+                <div class="matrix-container">
+                    <div class="unsorted-box">
+                        <h3>Storage</h3>
+                        <div id="unsorted-items" class="drop-zone"></div>
                     </div>
-                    <div class="matrix-item q2">
-                        <h3>Q2: Not Urgent & Important</h3>
-                        <div id="q2-zone" class="drop-zone" data-q="q2"></div>
-                    </div>
-                    <div class="matrix-item q3">
-                        <h3>Q3: Urgent & Not Important</h3>
-                        <div id="q3-zone" class="drop-zone" data-q="q3"></div>
-                    </div>
-                    <div class="matrix-item q4">
-                        <h3>Q4: Not Urgent & Not Important</h3>
-                        <div id="q4-zone" class="drop-zone" data-q="q4"></div>
+                    <div class="matrix-grid">
+                        <div class="matrix-item q1"><h3>Q1: Do</h3><div id="q1-zone" class="drop-zone" data-q="q1"></div></div>
+                        <div class="matrix-item q2"><h3>Q2: Plan</h3><div id="q2-zone" class="drop-zone" data-q="q2"></div></div>
+                        <div class="matrix-item q3"><h3>Q3: Delegate</h3><div id="q3-zone" class="drop-zone" data-q="q3"></div></div>
+                        <div class="matrix-item q4"><h3>Q4: Eliminate</h3><div id="q4-zone" class="drop-zone" data-q="q4"></div></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="nav-buttons">
-                <button class="prev-btn" onclick="prevStep(1)">&larr; 이전으로</button>
-                <button class="next-btn" onclick="nextStep(3)">다음으로 (BIG 3 설정) &rarr;</button>
-            </div>
-        </div>
-
-        <!-- STEP 3: BIG 3 -->
-        <div id="step-3" class="step-content">
-            <div class="step-tag">STEP 3</div>
-            <h2>Today's BIG 3</h2>
-            <div class="big3-container">
-                <div class="big3-input-group">
-                    <span>1</span><input id="big1" placeholder="오늘의 첫 번째 핵심 목표">
-                </div>
-                <div class="big3-input-group">
-                    <span>2</span><input id="big2" placeholder="오늘의 두 번째 핵심 목표">
-                </div>
-                <div class="big3-input-group">
-                    <span>3</span><input id="big3" placeholder="오늘의 세 번째 핵심 목표">
+                <div class="nav-buttons">
+                    <button class="prev-btn" onclick="prevStep(1)">&larr; Back</button>
+                    <button class="next-btn" onclick="nextStep(3)">BIG 3 설정 &rarr;</button>
                 </div>
             </div>
-            <div class="nav-buttons">
-                <button class="prev-btn" onclick="prevStep(2)">&larr; 이전으로</button>
-                <button class="next-btn" onclick="nextStep(4)">다음으로 (시간표 작성) &rarr;</button>
-            </div>
-        </div>
 
-        <!-- STEP 4: Daily Log -->
-        <div id="step-4" class="step-content">
-            <div class="step-tag">STEP 4</div>
-            <h2>Daily Log & Schedule</h2>
-            
-            <div class="category-manager">
-                <div class="category-input-group">
-                    <input type="text" id="new-category-name" placeholder="새 카테고리 이름">
-                    <button id="add-category-btn">추가</button>
+            <!-- STEP 3: BIG 3 -->
+            <div id="step-3" class="step-content">
+                <div class="step-tag">STEP 3: TODAY'S BIG 3</div>
+                <div class="big3-container">
+                    <div class="big3-input-group"><span>1</span><input id="big1" placeholder="첫 번째 핵심 목표"></div>
+                    <div class="big3-input-group"><span>2</span><input id="big2" placeholder="두 번째 핵심 목표"></div>
+                    <div class="big3-input-group"><span>3</span><input id="big3" placeholder="세 번째 핵심 목표"></div>
                 </div>
-                <div id="category-tags" class="category-tags"></div>
+                <div class="nav-buttons">
+                    <button class="prev-btn" onclick="prevStep(2)">&larr; Back</button>
+                    <button class="next-btn" onclick="updateSummary()">Review Report &darr;</button>
+                </div>
             </div>
+        </main>
 
+        <hr class="section-divider">
+
+        <!-- 하단 고정: 타임박스 (실행 영역) -->
+        <section class="execution-area">
+            <div class="step-tag">DAILY LOG (ALWAYS ON)</div>
+            <div class="category-manager-mini">
+                <input type="text" id="new-category-name" placeholder="카테고리 추가">
+                <button id="add-category-btn">+</button>
+                <div id="category-tags" class="category-tags-mini"></div>
+            </div>
             <div class="table-wrapper">
                 <table id="table">
                     <thead>
-                        <tr>
-                            <th>Time</th>
-                            <th>Category</th>
-                            <th>Task / Schedule</th>
-                            <th>Status</th>
-                        </tr>
+                        <tr><th>Time</th><th>Category</th><th>Task / Schedule</th><th>Status</th></tr>
                     </thead>
                     <tbody></tbody>
                 </table>
             </div>
-
-            <!-- 오늘의 요약 리포트 섹션 추가 -->
-            <div id="review-section" class="review-section">
-                <h2>Daily Review & Report</h2>
-                <div class="review-grid">
-                    <div class="review-card">
-                        <h3>Today's BIG 3</h3>
-                        <ul id="summary-big3"></ul>
-                    </div>
-                    <div class="review-card">
-                        <h3>Eisenhower Matrix Status</h3>
-                        <div id="summary-matrix"></div>
-                    </div>
-                    <div class="review-card full-width">
-                        <h3>Today's Highlights (Schedule)</h3>
-                        <div id="summary-log"></div>
-                    </div>
+            
+            <div id="review-section" class="review-section-mini">
+                <div class="review-grid-mini">
+                    <div id="summary-big3" class="summary-box"></div>
+                    <div id="summary-matrix" class="summary-box"></div>
                 </div>
             </div>
 
-            <button id="save-btn" onclick="saveData()">오늘의 계획 최종 저장</button>
-            <div class="nav-buttons">
-                <button class="prev-btn" onclick="prevStep(3)">&larr; 이전으로</button>
-            </div>
-        </div>
-
-        <hr class="divider">
-        <section class="contact-section">
-            <h2>Affiliate Inquiry</h2>
-            <form action="https://formspree.io/f/meerjjdy" method="POST">
-                <div class="form-group">
-                    <label for="name">성함 / 업체명</label>
-                    <input type="text" name="name" id="name" required placeholder="홍길동 / (주)WWBTD">
-                </div>
-                <div class="form-group">
-                    <label for="email">이메일 주소</label>
-                    <input type="email" name="_replyto" id="email" required placeholder="example@email.com">
-                </div>
-                <div class="form-group">
-                    <label for="message">문의 내용</label>
-                    <textarea name="message" id="message" rows="3" required placeholder="제휴 제안 내용을 입력해주세요."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">문의 보내기</button>
-            </form>
+            <button id="save-btn" onclick="saveData()">오늘의 모든 기록 최종 저장</button>
         </section>
+
+        <!-- 푸터: 슬림화된 제휴 문의 -->
+        <footer class="slim-footer">
+            <form action="https://formspree.io/f/meerjjdy" method="POST" class="slim-form">
+                <span>제휴 문의:</span>
+                <input type="text" name="name" required placeholder="업체명">
+                <input type="email" name="_replyto" required placeholder="이메일">
+                <input type="text" name="message" required placeholder="문의내용">
+                <button type="submit">전송</button>
+            </form>
+        </footer>
     </div>
     <script src="main.js"></script>
 </body>
