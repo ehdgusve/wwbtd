@@ -1,175 +1,157 @@
 :root {
-    --primary-color: #4a90e2;
-    --bg-color: #f5f7fa;
-    --card-bg: #ffffff;
-    --text-color: #333333;
-    --border-radius: 12px;
+    --primary-color: #333;
+    --bg-color: #fdfcf7;
+    --wood: #d3f9d8;
+    --fire: #ffe3e3;
+    --earth: #fff3bf;
+    --metal: #e9ecef;
+    --water: #d0ebff;
+    --q1: #ff6b6b;
+    --q2: #ffd43b;
+    --q3: #74c0fc;
+    --q4: #dee2e6;
 }
 
 body {
-    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: "Segoe UI", "Pretendard", -apple-system, sans-serif;
     background-color: var(--bg-color);
-    color: var(--text-color);
+    padding: 20px;
     margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
 }
 
-.container {
-    background: var(--card-bg);
-    width: 90%;
-    max-width: 450px;
-    padding: 2rem;
-    border-radius: var(--border-radius);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+.notebook {
+    max-width: 900px;
+    margin: 40px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    background-image: linear-gradient(#e6e6e6 1px, transparent 1px);
+    background-size: 100% 28px;
+    line-height: 28px;
 }
 
-header {
+h1 {
+    font-size: 48px;
+    letter-spacing: 5px;
+    margin: 0 0 30px 0;
     text-align: center;
-    margin-bottom: 2rem;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 1.8rem;
-    color: var(--primary-color);
+.section {
+    margin-top: 30px;
 }
 
-header p {
-    color: #888;
-    margin-top: 0.5rem;
+.section h2 {
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
 }
 
-.input-section {
-    display: flex;
+/* 입력 필드 */
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 80px;
+    resize: none;
+}
+
+/* BIG 3 */
+.big3 {
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 10px;
-    margin-bottom: 1.5rem;
 }
 
-#todo-input {
-    flex-grow: 1;
-    padding: 12px 15px;
+/* Daily Log 테이블 */
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
     border: 1px solid #ddd;
-    border-radius: 8px;
-    outline: none;
-    transition: border 0.3s;
+    padding: 8px;
+    text-align: center;
 }
 
-#todo-input:focus {
-    border-color: var(--primary-color);
+th {
+    background: #333;
+    color: white;
 }
 
-#add-btn {
-    padding: 12px 20px;
-    background-color: var(--primary-color);
+/* Q & Category 배경색 */
+.q1 { background-color: var(--q1) !important; color: white; }
+.q2 { background-color: var(--q2) !important; }
+.q3 { background-color: var(--q3) !important; color: white; }
+.q4 { background-color: var(--q4) !important; }
+
+.wood { background-color: var(--wood) !important; }
+.fire { background-color: var(--fire) !important; }
+.earth { background-color: var(--earth) !important; }
+.metal { background-color: var(--metal) !important; }
+.water { background-color: var(--water) !important; }
+
+/* 버튼 스타일 */
+#save-btn {
+    margin-top: 30px;
+    width: 100%;
+    padding: 15px;
+    background: #4CAF50;
     color: white;
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    border-radius: 6px;
+    font-size: 1.1rem;
     font-weight: bold;
-    transition: background 0.3s;
-}
-
-#add-btn:hover {
-    background-color: #357abd;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #eee;
-}
-
-li:last-child {
-    border-bottom: none;
-}
-
-.todo-text {
-    flex-grow: 1;
     cursor: pointer;
 }
 
-.todo-text.completed {
-    text-decoration: line-through;
-    color: #bbb;
-}
-
-.delete-btn {
-    background: none;
-    border: none;
-    color: #ff5e5e;
-    cursor: pointer;
-    font-size: 0.9rem;
-    padding-left: 10px;
-}
-
-/* Contact Form Styling */
 .divider {
     border: 0;
-    height: 1px;
-    background: #eee;
-    margin: 2rem 0;
+    height: 2px;
+    background: #333;
+    margin: 40px 0;
 }
 
+/* 제휴 문의 */
 .contact-section h2 {
-    font-size: 1.2rem;
-    color: #555;
-    margin-bottom: 1.2rem;
     text-align: center;
+    border-bottom: none;
+    color: #555;
+    font-size: 1.5rem;
 }
 
 .form-group {
-    margin-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 15px;
 }
 
 .form-group label {
-    font-size: 0.85rem;
+    display: block;
+    font-weight: bold;
     margin-bottom: 5px;
-    color: #666;
-    font-weight: 500;
-}
-
-.form-group input, 
-.form-group textarea {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-family: inherit;
-    outline: none;
-    transition: border 0.3s;
-}
-
-.form-group input:focus, 
-.form-group textarea:focus {
-    border-color: var(--primary-color);
 }
 
 .submit-btn {
     width: 100%;
-    padding: 12px;
-    background-color: #2ecc71;
+    padding: 15px;
+    background: #333;
     color: white;
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    border-radius: 6px;
     font-weight: bold;
-    font-size: 1rem;
-    transition: background 0.3s;
-    margin-top: 0.5rem;
-}
-
-.submit-btn:hover {
-    background-color: #27ae60;
+    cursor: pointer;
 }
