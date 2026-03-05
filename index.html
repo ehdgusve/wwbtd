@@ -3,44 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WWBTD Notebook Planner</title>
+    <title>WWBTD Strategic Planner</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="notebook">
         <header>
             <h1>PLANNER</h1>
+            <div class="date-row">
+                <input type="date" id="date">
+            </div>
         </header>
 
-        <div class="section">
-            <h2>Date</h2>
-            <input type="date" id="date">
-        </div>
+        <!-- STEP 1: Brain Dump -->
+        <section class="section">
+            <div class="step-tag">STEP 1</div>
+            <h2>Brain Dump</h2>
+            <textarea id="brain-dump" placeholder="지금 머릿속에 있는 모든 생각과 할 일들을 자유롭게 적어보세요..."></textarea>
+        </section>
 
-        <div class="section">
-            <h2>BIG 3</h2>
-            <div class="big3">
-                <input id="big1" placeholder="1. 가장 중요한 목표">
-                <input id="big2" placeholder="2. 두 번째 목표">
-                <input id="big3" placeholder="3. 세 번째 목표">
+        <!-- STEP 2: Eisenhower Matrix -->
+        <section class="section">
+            <div class="step-tag">STEP 2</div>
+            <h2>Eisenhower Matrix</h2>
+            <div class="matrix-grid">
+                <div class="matrix-item q1">
+                    <h3>Q1: Urgent & Important</h3>
+                    <textarea id="q1-tasks" placeholder="지금 바로 해야 할 일 (Do)"></textarea>
+                </div>
+                <div class="matrix-item q2">
+                    <h3>Q2: Not Urgent & Important</h3>
+                    <textarea id="q2-tasks" placeholder="계획해서 해야 할 일 (Plan)"></textarea>
+                </div>
+                <div class="matrix-item q3">
+                    <h3>Q3: Urgent & Not Important</h3>
+                    <textarea id="q3-tasks" placeholder="위임하거나 최소화할 일 (Delegate)"></textarea>
+                </div>
+                <div class="matrix-item q4">
+                    <h3>Q4: Not Urgent & Not Important</h3>
+                    <textarea id="q4-tasks" placeholder="삭제하거나 나중에 할 일 (Eliminate)"></textarea>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div class="section">
-            <h2>Note / Focus Plan</h2>
-            <textarea id="note" placeholder="메모나 집중 계획을 입력하세요..."></textarea>
-        </div>
+        <!-- STEP 3: BIG 3 -->
+        <section class="section">
+            <div class="step-tag">STEP 3</div>
+            <h2>Today's BIG 3</h2>
+            <div class="big3-container">
+                <div class="big3-input-group">
+                    <span>1</span><input id="big1" placeholder="오늘의 첫 번째 핵심 목표">
+                </div>
+                <div class="big3-input-group">
+                    <span>2</span><input id="big2" placeholder="오늘의 두 번째 핵심 목표">
+                </div>
+                <div class="big3-input-group">
+                    <span>3</span><input id="big3" placeholder="오늘의 세 번째 핵심 목표">
+                </div>
+            </div>
+        </section>
 
-        <div class="section">
-            <h2>Daily Log</h2>
+        <!-- STEP 4: Daily Log & Time Blocking -->
+        <section class="section">
+            <div class="step-tag">STEP 4</div>
+            <h2>Daily Log & Schedule</h2>
             <div class="table-wrapper">
                 <table id="table">
                     <thead>
                         <tr>
                             <th>Time</th>
                             <th>Category</th>
-                            <th>Task</th>
-                            <th>Q</th>
+                            <th>Task / Schedule</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,13 +82,13 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </section>
 
-        <button id="save-btn" onclick="saveData()">저장하기</button>
+        <button id="save-btn" onclick="saveData()">오늘의 계획 저장하기</button>
 
         <hr class="divider">
 
-        <!-- 제휴 문의 섹션 유지 -->
+        <!-- 제휴 문의 섹션 -->
         <section class="contact-section">
             <h2>Affiliate Inquiry</h2>
             <form action="https://formspree.io/f/meerjjdy" method="POST">
