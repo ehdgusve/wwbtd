@@ -45,6 +45,59 @@ function nextStep(step) {
     });
 
     if (step === 2) renderMatrixItems();
+    if (step === 4) updateSummary(); // 4단계 진입 시 요약 업데이트
+}
+
+function updateSummary() {
+    // BIG 3 업데이트
+    const b1 = document.getElementById("big1").value;
+    const b2 = document.getElementById("big2").value;
+    const b3 = document.getElementById("big3").value;
+    const big3List = document.getElementById("summary-big3");
+    big3List.innerHTML = `<li>${b1 || '-'}</li><li>${b2 || '-'}</li><li>${b3 || '-'}</li>`;
+
+    // 매트릭스 상태 업데이트
+    const matrixSummary = document.getElementById("summary-matrix");
+    const counts = {
+        q1: brainDumpItems.filter(i => i.q === 'q1').length,
+        q2: brainDumpItems.filter(i => i.q === 'q2').length,
+        q3: brainDumpItems.filter(i => i.q === 'q3').length,
+        q4: brainDumpItems.filter(i => i.q === 'q4').length,
+        unsorted: brainDumpItems.filter(i => i.q === null).length
+    };
+    
+    matrixSummary.innerHTML = `
+        <div class="summary-matrix-item">Q1 (긴급/중요): <span>${counts.q1}개</span></div>
+        <div class="summary-matrix-item">Q2 (계획/중요): <span>${counts.q2}개</span></div>
+        <div class="summary-matrix-item">Q3 (위임/긴급): <span>${counts.q3}개</span></div>
+        <div class="summary-matrix-item">Q4 (삭제/나중): <span>${counts.q4}개</span></div>
+        <div class="summary-matrix-item">미분류: <span>${counts.unsorted}개</span></div>
+    `;
+
+    // 시간표 주요 내용 업데이트 (입력된 내용만)
+    const logSummary = document.getElementById("summary-log");
+    const rows = document.querySelectorAll("#table tbody tr");
+    let html = "";
+    
+    rows.forEach(r => {
+        const task = r.querySelector(".task-input").value;
+        const time = r.cells[0].textContent;
+        const status = r.querySelector(".status-select").value;
+        const statusText = r.querySelector(".status-select").selectedOptions[0].text;
+        
+        if (task.trim() !== "") {
+            const statusClass = status === 'done' ? 'status-done' : (status === 'doing' ? 'status-doing' : '');
+            html += `
+                <div class="summary-log-row">
+                    <span class="time">${time}</span>
+                    <span class="task">${task}</span>
+                    <span class="status ${statusClass}">${statusText}</span>
+                </div>
+            `;
+        }
+    });
+    
+    logSummary.innerHTML = html || "<p style='color:#ccc; font-size:0.9rem;'>입력된 일정이 없습니다.</p>";
 }
 
 function prevStep(step) {

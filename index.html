@@ -130,6 +130,25 @@
                 </table>
             </div>
 
+            <!-- 오늘의 요약 리포트 섹션 추가 -->
+            <div id="review-section" class="review-section">
+                <h2>Daily Review & Report</h2>
+                <div class="review-grid">
+                    <div class="review-card">
+                        <h3>Today's BIG 3</h3>
+                        <ul id="summary-big3"></ul>
+                    </div>
+                    <div class="review-card">
+                        <h3>Eisenhower Matrix Status</h3>
+                        <div id="summary-matrix"></div>
+                    </div>
+                    <div class="review-card full-width">
+                        <h3>Today's Highlights (Schedule)</h3>
+                        <div id="summary-log"></div>
+                    </div>
+                </div>
+            </div>
+
             <button id="save-btn" onclick="saveData()">오늘의 계획 최종 저장</button>
             <div class="nav-buttons">
                 <button class="prev-btn" onclick="prevStep(3)">&larr; 이전으로</button>
