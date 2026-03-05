@@ -70,6 +70,61 @@ th { background: #333; color: white; }
 .slim-form input { padding: 5px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.8rem; width: 120px; }
 .slim-form button { padding: 5px 15px; background: #888; color: white; border: none; border-radius: 4px; cursor: pointer; }
 
+/* SEO Info Article Styling */
+.info-article {
+    margin-top: 60px;
+    padding: 40px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    line-height: 1.8;
+    color: #444;
+}
+
+.info-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.info-header h2 {
+    font-size: 1.8rem;
+    color: #222;
+    margin-bottom: 15px;
+}
+
+.info-header p {
+    font-size: 1.1rem;
+    color: #777;
+}
+
+.info-section {
+    margin-bottom: 30px;
+}
+
+.info-section h3 {
+    font-size: 1.3rem;
+    color: #333;
+    border-left: 4px solid #333;
+    padding-left: 15px;
+    margin-bottom: 15px;
+}
+
+.info-section p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.info-section ul {
+    background: #f9f9f9;
+    padding: 20px 40px;
+    border-radius: 8px;
+    list-style-type: disc;
+}
+
+.info-section li {
+    margin-bottom: 10px;
+}
+
 .step-content { display: none; }
 .step-content.active { display: block; animation: fadeIn 0.3s; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
