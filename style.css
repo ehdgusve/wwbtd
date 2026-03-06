@@ -1,127 +1,98 @@
-/* Sage Garden Premium Design System */
+/* iOS 16 Premium & Sage Mixed Design */
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap');
 
 :root {
-    --primary-color: #5E7B61;
-    --accent-color: #A3B18A;
-    --bg-color: #F8F9F4;
-    --text-main: #4A5D4C;
+    --system-blue: #007aff;
+    --system-background: #f2f2f7;
     --card-bg: #ffffff;
-    --q1: #ff6b6b; --q2: #4dabf7; --q3: #ffd43b; --q4: #adb5bd;
+    --q1: #ff3b30; --q2: #ff9500; --q3: #5856d6; --q4: #8e8e93;
+    --primary-color: var(--system-blue);
 }
 
 body { 
-    font-family: 'Pretendard', sans-serif; 
-    background-color: var(--bg-color); 
-    margin: 0; color: var(--text-main); 
-    line-height: 1.6;
+    font-family: 'Pretendard', sans-serif;
+    background-color: var(--system-background); 
+    margin: 0; color: #000;
 }
 
-/* 로고 및 상단 설정 */
+/* --- Common UI --- */
 .home-logo {
-    position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-    font-family: 'Gowun Batang', serif; font-size: 1.5rem; font-weight: 800;
-    letter-spacing: 10px; cursor: pointer; z-index: 1000; color: var(--primary-color);
-    transition: 0.3s;
+    position: fixed; top: 0; left: 0; right: 0; height: 50px;
+    background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Gowun Batang', serif; font-weight: 700; font-size: 1.1rem;
+    z-index: 1000; border-bottom: 0.5px solid #d1d1d6; cursor: pointer;
+    color: var(--system-blue);
 }
 
-.top-settings {
-    position: fixed; top: 20px; right: 25px; z-index: 1000;
-    display: flex; align-items: center; gap: 15px;
-}
+.top-settings { position: fixed; top: 12px; right: 15px; z-index: 1001; display: flex; align-items: center; gap: 10px; }
+.progress-container { display: flex; align-items: center; gap: 8px; font-size: 0.7rem; font-weight: 700; color: #888; }
+.progress-bar-bg { width: 80px; height: 6px; background: #ddd; border-radius: 10px; overflow: hidden; }
+.progress-bar-fill { width: 0%; height: 100%; background: #2ecc71; transition: 0.5s; }
 
-/* Planner Layout (Wide) */
-.planner-wrapper {
-    display: flex; flex-direction: column;
-    max-width: 1300px; margin: 80px auto 40px; padding: 0 20px; gap: 30px;
-}
+/* --- 1. Landing Page (iOS Style Restore) --- */
+.landing-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 80px 20px; text-align: center; }
+.landing-content { max-width: 800px; width: 100%; }
+.landing-header h1 { font-family: 'Gowun Batang', serif; font-size: 4rem; letter-spacing: 15px; margin: 0; color: var(--system-blue); }
+.landing-header p { font-size: 1.1rem; color: #666; margin-bottom: 50px; }
 
+.guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 40px; }
+.guide-card { 
+    background: white; padding: 25px 20px; border-radius: 20px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; text-align: center;
+}
+.guide-card.clickable:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+.guide-card .icon { font-size: 2rem; color: var(--system-blue); margin-bottom: 15px; }
+.guide-card h3 { font-size: 0.95rem; margin-bottom: 8px; font-family: 'Gowun Batang', serif; }
+.guide-card p { font-size: 0.75rem; color: #888; line-height: 1.4; }
+.view-more { font-size: 0.65rem; color: var(--system-blue); font-weight: 700; margin-top: 10px; display: block; }
+
+/* Login Box (Refined) */
+.login-box { max-width: 320px; margin: 0 auto; background: white; border-radius: 20px; padding: 30px; }
+.form-group-ios { background: #f2f2f7; border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
+.form-group-ios input { width: 100%; border: none; padding: 12px 15px; background: transparent; border-bottom: 0.5px solid #ddd; font-family: inherit; }
+.form-group-ios input:last-child { border-bottom: none; }
+.remember-me { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+
+/* --- 2. Planner App (Wide Layout) --- */
+.planner-wrapper { display: flex; flex-direction: column; max-width: 1200px; margin: 80px auto; padding: 0 20px; gap: 25px; }
 @media (min-width: 1024px) {
     .planner-wrapper { flex-direction: row; align-items: flex-start; }
-    .strategy-sidebar { width: 400px; position: sticky; top: 80px; }
+    .strategy-sidebar { width: 380px; position: sticky; top: 80px; }
     .main-log { flex: 1; }
 }
 
-/* Card & Section Styling */
-.card {
-    background: var(--card-bg); border-radius: 30px; padding: 30px;
-    box-shadow: 0 10px 30px rgba(94, 123, 97, 0.05);
-    border: 1px solid rgba(0,0,0,0.02); margin-bottom: 25px;
+.card { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); margin-bottom: 20px; border: 1px solid rgba(0,0,0,0.03); }
+.section-label { font-size: 0.7rem; font-weight: 800; color: #aaa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block; }
+
+/* Chips & Matrix */
+.chip-pool { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.dump-chip { background: #f2f2f7; padding: 8px 14px; border-radius: 15px; font-size: 0.85rem; cursor: grab; display: flex; align-items: center; gap: 6px; }
+.matrix-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.matrix-box { background: white; border-radius: 15px; padding: 12px; min-height: 120px; border: 1px solid #eee; }
+.matrix-box.q1 { border-top: 3px solid var(--q1); }
+.matrix-box.q2 { border-top: 3px solid var(--q2); }
+.matrix-box.q3 { border-top: 3px solid var(--q3); }
+.matrix-box.q4 { border-top: 3px solid var(--q4); }
+.q-tag { font-size: 0.65rem; font-weight: 800; opacity: 0.4; }
+
+/* BIG 3 */
+.big3-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.big3-num { width: 28px; height: 28px; border-radius: 50%; background: var(--system-blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; }
+
+/* Buttons (Forced Theme Sync) */
+.login-btn, .planner-btn, .save-btn-modern, .btn-add {
+    background-color: var(--system-blue) !important; color: white !important;
+    border: none; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s;
 }
+.login-btn, .save-btn-modern { width: 100%; padding: 15px; }
+.btn-add { padding: 6px 15px; font-size: 0.7rem; border-radius: 20px; }
 
-.section-label {
-    text-transform: uppercase; font-size: 0.7rem; font-weight: 900;
-    letter-spacing: 2px; color: var(--accent-color); margin-bottom: 15px; display: block;
-}
+/* Schedule Row */
+.schedule-row { display: grid; grid-template-columns: 140px 1fr 100px 30px; gap: 10px; padding: 12px; background: #fbfbfa; border-radius: 15px; margin-bottom: 8px; }
 
-/* Input Fields */
-input[type="text"], input[type="time"], select {
-    background: #F1F3EE; border: none; padding: 12px 18px;
-    border-radius: 15px; font-family: inherit; width: 100%;
-    outline: none; transition: 0.3s;
-}
-input:focus { ring: 2px solid var(--accent-color); background: #fff; box-shadow: 0 0 0 2px var(--accent-color); }
-
-/* Step 1: Brain Dump Chips */
-.chip-pool {
-    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px;
-}
-.dump-chip {
-    background: #EDF1E4; color: var(--primary-color); padding: 8px 16px;
-    border-radius: 50px; font-size: 0.85rem; font-weight: 500;
-    border: 1px solid #DDE4D0; cursor: grab; display: flex; align-items: center; gap: 8px;
-}
-
-/* Step 2: Matrix Grid (Sage Style) */
-.matrix-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-}
-.matrix-box {
-    aspect-ratio: 1/1; border-radius: 20px; padding: 12px;
-    display: flex; flex-direction: column; border: 1px solid transparent;
-}
-.matrix-box.q1 { background: #FFF5F5; border-color: #FFE3E3; }
-.matrix-box.q2 { background: #F5F9FF; border-color: #E3F0FF; }
-.matrix-box.q3 { background: #FFFBF0; border-color: #FFF3BF; }
-.matrix-box.q4 { background: #F9F9F9; border-color: #EEEEEE; }
-
-.q-tag { font-size: 0.6rem; font-weight: 800; opacity: 0.5; margin-bottom: 5px; }
-
-/* Step 3: BIG 3 (Sage List) */
-.big3-row { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
-.big3-num {
-    width: 32px; height: 32px; border-radius: 50%; background: var(--primary-color);
-    color: white; display: flex; align-items: center; justify-content: center;
-    font-family: 'Gowun Batang', serif; font-style: italic; font-size: 0.9rem;
-}
-.big3-row input { background: transparent; border-bottom: 1px solid #eee; border-radius: 0; padding: 5px 0; }
-
-/* Main Schedule Table */
-.main-log { background: white; border-radius: 40px; padding: 40px; }
-.log-header h2 { font-family: 'Gowun Batang', serif; font-size: 2.5rem; italic: true; margin: 0; }
-
-.schedule-row {
-    display: grid; grid-template-columns: 150px 1fr 120px 40px;
-    align-items: center; gap: 15px; padding: 15px; background: #FBFBFA;
-    border-radius: 20px; margin-bottom: 10px; transition: 0.3s;
-}
-.schedule-row:hover { background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
-
-/* Buttons */
-.btn-primary {
-    background: var(--primary-color); color: white; border: none;
-    padding: 16px 30px; border-radius: 20px; font-weight: 800;
-    letter-spacing: 2px; cursor: pointer; transition: 0.3s; width: 100%;
-}
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(94, 123, 97, 0.2); }
-
-.btn-add { background: var(--accent-color); color: white; border-radius: 50px; padding: 8px 20px; font-size: 0.75rem; font-weight: 800; border: none; cursor: pointer; }
-
-/* Landing Page Sage Style */
-.landing-page { background: var(--bg-color); }
-.landing-header h1 { font-family: 'Gowun Batang', serif; font-size: 5rem; letter-spacing: 20px; color: var(--primary-color); }
-.guide-card { border-radius: 30px; border: none; }
-
-.step-indicator { display: none; } /* 와이드 레이아웃에서는 모든 스텝이 보입니다 */
-.step-content { display: block !important; }
+/* Modal */
+.modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); }
+.modal-content { background: white; margin: 8vh auto; padding: 30px; border-radius: 25px; width: 88%; max-width: 600px; max-height: 80vh; overflow-y: auto; position: relative; }
+.close-modal { position: sticky; float: right; top: -10px; font-size: 2rem; color: #ccc; cursor: pointer; }

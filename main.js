@@ -1,8 +1,18 @@
 const i18n = {
     ko: {
         app_name: "WWBTD", landing_subtitle: "성취를 위한 전략적 시간 관리의 시작", how_to_use: "사용 방법",
-        login_start: "로그인하여 시작하기", id_placeholder: "이름", pw_placeholder: "비밀번호", enter_btn: "플래너 시작",
+        login_title: "Sign In", login_start: "로그인하여 시작하기", id_placeholder: "아이디", pw_placeholder: "비밀번호", 
+        remember_id: "아이디 기억하기", enter_btn: "Get Started",
         step1_tag: "01. Brain Dump", dump_placeholder: "무슨 생각을 하고 있나요?",
+        step2_tag: "02. Priority Matrix",
+        step3_tag: "03. Today's BIG 3",
+        execution_tag: "Daily Schedule", save_btn: "FINISH & SAVE TODAY"
+    },
+    en: {
+        app_name: "WWBTD", landing_subtitle: "Strategic Time Management for Success", how_to_use: "How to Use",
+        login_title: "Sign In", login_start: "Sign in to Start", id_placeholder: "ID", pw_placeholder: "Password", 
+        remember_id: "Remember ID", enter_btn: "Get Started",
+        step1_tag: "01. Brain Dump", dump_placeholder: "What's on your mind?",
         step2_tag: "02. Priority Matrix",
         step3_tag: "03. Today's BIG 3",
         execution_tag: "Daily Schedule", save_btn: "FINISH & SAVE TODAY"
@@ -16,7 +26,34 @@ document.addEventListener('DOMContentLoaded', () => {
     initSettings();
     checkLoginState();
     
-    document.getElementById('login-form').onsubmit = (e) => { e.preventDefault(); localStorage.setItem('isLoggedIn', 'true'); checkLoginState(); };
+    // 저장된 아이디 불러오기 (아이디 기억하기 기능)
+    const savedUsername = localStorage.getItem('rememberedUsername');
+    if (savedUsername) {
+        const userEl = document.getElementById('username');
+        const remEl = document.getElementById('remember-id');
+        if(userEl) userEl.value = savedUsername;
+        if(remEl) remEl.checked = true;
+    }
+
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.onsubmit = (e) => { 
+            e.preventDefault(); 
+            const username = document.getElementById('username').value;
+            const remember = document.getElementById('remember-id').checked;
+
+            // 아이디 기억하기 로직
+            if (remember) {
+                localStorage.setItem('rememberedUsername', username);
+            } else {
+                localStorage.removeItem('rememberedUsername');
+            }
+
+            localStorage.setItem('isLoggedIn', 'true'); 
+            checkLoginState(); 
+        };
+    }
+
     document.getElementById('lang-select').onchange = (e) => { currentLang = e.target.value; localStorage.setItem('lang', currentLang); applyLanguage(); };
     document.getElementById('base-color').oninput = (e) => applyColorPalette(e.target.value);
 });
@@ -24,16 +61,19 @@ document.addEventListener('DOMContentLoaded', () => {
 function applyColorPalette(hex) {
     const root = document.documentElement;
     localStorage.setItem('themeColor', hex);
-    root.style.setProperty('--primary-color', hex);
-    
-    // 버튼 및 로고 색상 강제 업데이트
-    const elements = document.querySelectorAll('.btn-primary, .home-logo, .big3-num');
+    root.style.setProperty('--system-blue', hex);
+
+    // 버튼, 로고, 숫자 아이콘 색상 강제 업데이트
+    const elements = document.querySelectorAll('.login-btn, .planner-btn, .save-btn-modern, .btn-add, .home-logo, .big3-num, .landing-header h1, .view-more');
     elements.forEach(el => {
-        if(el.classList.contains('big3-num')) el.style.backgroundColor = hex;
-        else if(el.classList.contains('home-logo')) el.style.color = hex;
-        else el.style.backgroundColor = hex;
+        if (el.classList.contains('home-logo') || el.classList.contains('view-more') || el.tagName === 'H1') {
+            el.style.color = hex;
+        } else {
+            el.style.backgroundColor = hex;
+        }
     });
 }
+
 
 function checkLoginState() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -57,20 +97,23 @@ function goToPlanner() {
 
 function initApp() {
     const today = new Date().toISOString().split('T')[0];
-    document.getElementById("date").value = today;
+    const dateInput = document.getElementById("date");
+    if(dateInput) dateInput.value = today;
     initDragAndDrop();
     
     const dumpInput = document.getElementById('dump-input');
-    dumpInput.onkeypress = (e) => {
-        if(e.key === 'Enter' && dumpInput.value.trim()) {
-            brainDumpItems.push({ id: Date.now(), text: dumpInput.value.trim(), q: null });
-            renderDumpList(); dumpInput.value = "";
-        }
-    };
+    if (dumpInput) {
+        dumpInput.onkeypress = (e) => {
+            if(e.key === 'Enter' && dumpInput.value.trim()) {
+                brainDumpItems.push({ id: Date.now(), text: dumpInput.value.trim(), q: null });
+                renderDumpList(); dumpInput.value = "";
+            }
+        };
+    }
 
     const b1 = document.getElementById('big1'), b2 = document.getElementById('big2'), b3 = document.getElementById('big3');
-    b1.onkeypress = (e) => { if(e.key === 'Enter') b2.focus(); };
-    b2.onkeypress = (e) => { if(e.key === 'Enter') b3.focus(); };
+    if(b1) b1.onkeypress = (e) => { if(e.key === 'Enter') b2.focus(); };
+    if(b2) b2.onkeypress = (e) => { if(e.key === 'Enter') b3.focus(); };
 
     loadData();
     applyColorPalette(localStorage.getItem('themeColor') || '#5E7B61');
@@ -78,6 +121,7 @@ function initApp() {
 
 function renderDumpList() {
     const list = document.getElementById('dump-list'); 
+    if(!list) return;
     list.innerHTML = "";
     brainDumpItems.filter(i => i.q === null).forEach(item => list.appendChild(createDragChip(item)));
 }
@@ -126,6 +170,7 @@ function renderMatrixItems() {
 
 function addTimeBlock(data = {}) {
     const container = document.getElementById('schedule-list');
+    if(!container) return;
     const row = document.createElement('div');
     row.className = 'schedule-row';
     row.innerHTML = `
@@ -147,7 +192,10 @@ function addTimeBlock(data = {}) {
 
 function initSettings() {
     const savedColor = localStorage.getItem('themeColor') || '#5E7B61';
-    document.getElementById('base-color').value = savedColor;
+    const colorInput = document.getElementById('base-color');
+    const langSelect = document.getElementById('lang-select');
+    if(colorInput) colorInput.value = savedColor;
+    if(langSelect) langSelect.value = currentLang;
     applyColorPalette(savedColor);
     applyLanguage();
 }
@@ -180,12 +228,17 @@ async function saveData() {
 }
 
 function loadData() {
-    const date = document.getElementById("date").value, raw = localStorage.getItem(`planner_sage_${date}`);
+    const dateInput = document.getElementById("date");
+    if(!dateInput) return;
+    const date = dateInput.value, raw = localStorage.getItem(`planner_sage_${date}`);
     const container = document.getElementById('schedule-list'); 
-    container.innerHTML = "";
+    if(container) container.innerHTML = "";
     if (!raw) { brainDumpItems = []; renderDumpList(); addTimeBlock(); return; }
     const d = JSON.parse(raw); brainDumpItems = d.brainDumpItems || []; 
-    document.getElementById("big1").value = d.big1 || ""; document.getElementById("big2").value = d.big2 || ""; document.getElementById("big3").value = d.big3 || "";
+    const b1 = document.getElementById("big1"), b2 = document.getElementById("big2"), b3 = document.getElementById("big3");
+    if(b1) b1.value = d.big1 || ""; 
+    if(b2) b2.value = d.big2 || ""; 
+    if(b3) b3.value = d.big3 || "";
     renderDumpList(); renderMatrixItems();
     if (d.log && d.log.length) d.log.forEach(item => addTimeBlock(item)); else addTimeBlock();
 }
